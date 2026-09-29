@@ -1,0 +1,70 @@
+name: Shirt Registration Form
+description: Fill out this form to register and order a shirt.
+title: "[REGISTER] - <Your Name>"
+labels: ["registration"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: FULL NAME
+      placeholder: Enter your full name
+    validations:
+      required: true
+      
+  - type: input
+    id: id_number
+    attributes:
+      label: ID CARD NUMBER
+      placeholder: Enter your ID card number (NIK)
+    validations:
+      required: true
+      
+  - type: textarea
+    id: address
+    attributes:
+      label: ADDRESS
+      placeholder: Enter your full address
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: sleeve
+    attributes:
+      label: SLEEVE TYPE
+      options:
+        - Short Sleeve
+        - Long Sleeve
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: size
+    attributes:
+      label: SHIRT SIZE
+      options:
+        - S
+        - M
+        - L
+        - XL
+        - XXL
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: payment
+    attributes:
+      label: PAYMENT
+      description: "If using GoPay, transfer to: 083122356065 a/n ABDULLAH"
+      options:
+        - On the Spot (Cash)
+        - GoPay
+    validations:
+      required: true
+      
+  - type: textarea
+    id: proof
+    attributes:
+      label: PROOF OF PAYMENT / QR CODE
+      description: Drag & drop (upload) your payment proof/QR code image here.
+    validations:
+      required: true
