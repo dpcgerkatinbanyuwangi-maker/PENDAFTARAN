@@ -1,70 +1,113 @@
-name: Shirt Registration Form
-description: Fill out this form to register and order a shirt.
-title: "[REGISTER] - <Your Name>"
-labels: ["registration"]
-body:
-  - type: input
-    id: name
-    attributes:
-      label: FULL NAME
-      placeholder: Enter your full name
-    validations:
-      required: true
-      
-  - type: input
-    id: id_number
-    attributes:
-      label: ID CARD NUMBER
-      placeholder: Enter your ID card number (NIK)
-    validations:
-      required: true
-      
-  - type: textarea
-    id: address
-    attributes:
-      label: ADDRESS
-      placeholder: Enter your full address
-    validations:
-      required: true
-      
-  - type: dropdown
-    id: sleeve
-    attributes:
-      label: SLEEVE TYPE
-      options:
-        - Short Sleeve
-        - Long Sleeve
-    validations:
-      required: true
-      
-  - type: dropdown
-    id: size
-    attributes:
-      label: SHIRT SIZE
-      options:
-        - S
-        - M
-        - L
-        - XL
-        - XXL
-    validations:
-      required: true
-      
-  - type: dropdown
-    id: payment
-    attributes:
-      label: PAYMENT
-      description: "If using GoPay, transfer to: 083122356065 a/n ABDULLAH"
-      options:
-        - On the Spot (Cash)
-        - GoPay
-    validations:
-      required: true
-      
-  - type: textarea
-    id: proof
-    attributes:
-      label: PROOF OF PAYMENT / QR CODE
-      description: Drag & drop (upload) your payment proof/QR code image here.
-    validations:
-      required: true
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran Kaos</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 20px; color: #2c3e50; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        input[type="text"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        .note { font-size: 12px; color: #e74c3c; margin-top: 5px; display: block; }
+        button { width: 100%; padding: 12px; background-color: #27ae60; border: none; color: white; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background-color: #2ecc71; }
+        #message { margin-top: 15px; text-align: center; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Form Pendaftaran Kaos</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label>NAMA LENGKAP</label>
+            <input type="text" id="nama" name="nama" required placeholder="Sesuai KTP">
+        </div>
+        
+        <div class="form-group">
+            <label>NIK KTP</label>
+            <input type="text" id="nik" name="nik" required placeholder="16 Digit NIK">
+        </div>
+        
+        <div class="form-group">
+            <label>ALAMAT</label>
+            <textarea id="alamat" name="alamat" rows="3" required placeholder="Alamat lengkap"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>JENIS LENGAN</label>
+            <select id="lengan" name="lengan" required>
+                <option value="">-- Pilih --</option>
+                <option value="Pendek">Lengan Pendek</option>
+                <option value="Panjang">Lengan Panjang</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>UKURAN KAOS</label>
+            <select id="ukuran" name="ukuran" required>
+                <option value="">-- Pilih --</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>PEMBAYARAN</label>
+            <select id="pembayaran" name="pembayaran" required>
+                <option value="">-- Pilih --</option>
+                <option value="Ditempat">Bayar di Tempat</option>
+                <option value="GoPay">GoPay (083122356065 a/n ABDULLAH)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>BUKTI PEMBAYARAN (Link Google Drive / Imgur)</label>
+            <input type="text" id="bukti" name="bukti" required placeholder="Masukkan link gambar bukti bayar">
+            <span class="note">*Upload gambar ke Google Drive/Imgur, lalu paste linknya di sini.</span>
+        </div>
+        
+        <button type="submit" id="submitBtn">Kirim Pendaftaran</button>
+        <div id="message"></div>
+    </form>
+</div>
+
+<script>
+    // GANTI URL DI BAWAH DENGAN URL WEB APP GOOGLE SCRIPT ANDA
+    const scriptURL = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_ANDA/exec'; 
+    const form = document.getElementById('registrationForm');
+    const message = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.innerText = 'Mengirim...';
+        submitBtn.disabled = true;
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                message.style.display = 'block';
+                message.style.color = 'green';
+                message.innerText = 'Pendaftaran berhasil terkirim!';
+                form.reset();
+                submitBtn.innerText = 'Kirim Pendaftaran';
+                submitBtn.disabled = false;
+            })
+            .catch(error => {
+                message.style.display = 'block';
+                message.style.color = 'red';
+                message.innerText = 'Gagal mengirim data. Coba lagi.';
+                submitBtn.innerText = 'Kirim Pendaftaran';
+                submitBtn.disabled = false;
+            });
+    });
+</script>
+
+</body>
+</html>
